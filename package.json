@@ -1,0 +1,21 @@
+{
+  "name": "sourcecode-vue3",
+  "version": "1.0.0",
+  "description": "sourcecode vue3",
+  "main": "util.js",
+  "files": ["util.js"],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tggcs/sourcecode-vue3.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tggcs/sourcecode-vue3/issues"
+  },
+  "homepage": "https://github.com/tggcs/sourcecode-vue3#readme"
+}
