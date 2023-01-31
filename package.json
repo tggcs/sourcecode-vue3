@@ -1,9 +1,9 @@
 {
   "name": "sourcecode-vue3",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "sourcecode vue3",
   "main": "util.js",
-  "files": ["util.js"],
+  "files": ["util.js", "reactivity"],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

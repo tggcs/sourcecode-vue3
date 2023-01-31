@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="add()">add</button>
+    <div id="value"></div>
+    <script>
+      // 全局变量
+      const targetMap = new WeakMap();
+      let activeEffect;
+
+      // 实现响应式对象，拦截get，set，加入track，trigger
+      function track(target, type, key) {
+        let depsMap = targetMap.get(target);
+        if (!depsMap) {
+          targetMap.set(target, (depsMap = new Map()));
+        }
+
+        let dep = depsMap.get(key);
+        if (!dep) {
+          depsMap.set(key, (dep = new Set()));
+        }
+
+        dep.add(activeEffect);
+
+        console.log("track", targetMap);
+      }
+
+      function trigger(target, type, key, newValue) {
+        const depsMap = targetMap.get(target);
+
+        console.log("\n trigger", target, type, key, newValue);
+        depsMap.get(key).forEach((effect) => {
+          effect.run();
+        });
+      }
+
+      function reactive(target) {
+        return new Proxy(target, {
+          get(target, key, receiver) {
+            const res = Reflect.get(target, key, receiver);
+            track(target, "get", key);
+            return res;
+          },
+          set(target, key, value, receiver) {
+            const res = Reflect.set(target, key, value, receiver);
+            trigger(target, "set", key, value);
+            return res;
+          },
+        });
+      }
+
+      // 实现副作用函数
+      class ReactiveEffect {
+        fn;
+        constructor(fn) {
+          this.fn = fn;
+        }
+        run() {
+          console.log("run", this);
+          activeEffect = this;
+          return this.fn();
+        }
+      }
+
+      function effect(fn) {
+        const _effect = new ReactiveEffect(fn);
+        _effect.run();
+      }
+    </script>
+    <script>
+      const counter = reactive({ num: 0 });
+      effect(() => {
+        console.log("effect", counter);
+        document.getElementById("value").innerText = counter.num;
+      });
+      let i = 1;
+      window.add = () => {
+        counter.num = i++;
+      };
+    </script>
+  </body>
+</html>
