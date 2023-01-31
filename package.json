@@ -1,6 +1,6 @@
 {
   "name": "sourcecode-vue3",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "sourcecode vue3",
   "main": "util.js",
   "files": ["util.js", "reactivity"],

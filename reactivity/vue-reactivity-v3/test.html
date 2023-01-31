@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="add()">add</button>
+    <div id="value"></div>
+    <script type="module">
+      import { reactive } from "./src/reactive.js";
+      import { computed } from "./src/computed.js";
+      // 1.获取响应式对象
+      const counter = reactive({ num: 0 });
+      // 2.获取计算属性
+      const percentValue = computed(() => `${counter.num}%`);
+      // console.log(percentValue.value);
+      // 3.触发
+      let i = 1;
+      window.add = () => {
+        counter.num = i++;
+        document.getElementById("value").innerText = percentValue.value;
+      };
+    </script>
+  </body>
+</html>
